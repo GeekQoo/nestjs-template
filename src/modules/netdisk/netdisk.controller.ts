@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { NetdiskService } from "./netdisk.service";
-import { uploadFileDto } from "@/modules/netdisk/netdisk.dto";
+import { UploadFileDto } from "@/modules/netdisk/netdisk.dto";
 import { ResponseDto } from "@/common/dto/response.dto";
 import * as multer from "multer";
 import * as fs from "fs";
@@ -89,7 +89,7 @@ export class NetdiskController {
             })
         )
         file: Express.Multer.File,
-        @Body() dto: uploadFileDto
+        @Body() dto: UploadFileDto
     ) {
         const uploadedFile = this.netdiskService.uploadFile(file, dto, "netdisk");
         return ResponseDto.success(uploadedFile);
