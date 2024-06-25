@@ -14,5 +14,5 @@ export class ArticleCategoryDto {
     parentId?: number;
 }
 
-// 分页查询用户
+// 分页查询文章分类
 export class PaginationSearchArticleCategoryDto extends PaginationParamDto {}
