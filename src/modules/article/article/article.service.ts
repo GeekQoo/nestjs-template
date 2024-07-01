@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, Repository } from "typeorm";
+import { EntityManager, FindOptionsWhere, Repository } from "typeorm";
 import { ArticleEntity } from "@/entities/article/article.entity";
 import { ArticleDto, PaginationSearchArticleDto } from "@/modules/article/article/article.dto";
 import { cloneDeep } from "lodash";
-import { SysUserEntity } from "@/entities/system/sys-user.entity";
 
 @Injectable()
 export class ArticleService {
@@ -76,7 +75,7 @@ export class ArticleService {
      * @param condition - 查询条件
      * @returns 返回满足条件的用户对象，如果找不到则返回 null
      */
-    async queryOneByCondition(condition: Partial<SysUserEntity>) {
+    async queryOneByCondition(condition: FindOptionsWhere<ArticleEntity>) {
         const item = await this.articleRepository.findOne({
             where: condition
         });
@@ -90,6 +89,15 @@ export class ArticleService {
             ...item,
             tags: tags.map((i) => i.tag_id)
         };
+    }
+
+    /*
+     * 通过关联的分类ID查询文章
+     */
+    async queryByCategoryId(categoryId: number) {
+        const qb = this.articleRepository.createQueryBuilder("article");
+        qb.innerJoinAndSelect("article.categoryId", "category").where("category.id = :categoryId", { categoryId });
+        return await qb.getMany();
     }
 
     /*
