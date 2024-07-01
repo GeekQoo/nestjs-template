@@ -1,7 +1,11 @@
-import { IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 import { PaginationParamDto } from "@/common/dto/pagination.dto";
 
 export class ArticleTagDto {
+    @IsNumber()
+    @IsOptional()
+    id?: number;
+
     @IsString()
     tagName: string;
 }
