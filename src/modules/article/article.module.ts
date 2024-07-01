@@ -7,10 +7,13 @@ import { ArticleCategoryService } from "@/modules/article/category/article-categ
 import { ArticleTagEntity } from "@/entities/article/article-tag.entity";
 import { ArticleTagController } from "@/modules/article/tag/article-tag.controller";
 import { ArticleTagService } from "@/modules/article/tag/article-tag.service";
+import { ArticleEntity } from "@/entities/article/article.entity";
+import { ArticleController } from "@/modules/article/article/article.controller";
+import { ArticleService } from "@/modules/article/article/article.service";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ArticleCategoryEntity, ArticleTagEntity]),
+        TypeOrmModule.forFeature([ArticleCategoryEntity, ArticleTagEntity, ArticleEntity]),
         RouterModule.register([
             {
                 path: "/article",
@@ -18,7 +21,7 @@ import { ArticleTagService } from "@/modules/article/tag/article-tag.service";
             }
         ])
     ],
-    controllers: [ArticleCategoryController, ArticleTagController],
-    providers: [ArticleCategoryService, ArticleTagService]
+    controllers: [ArticleCategoryController, ArticleTagController, ArticleController],
+    providers: [ArticleCategoryService, ArticleTagService, ArticleService]
 })
 export class ArticleModule {}
