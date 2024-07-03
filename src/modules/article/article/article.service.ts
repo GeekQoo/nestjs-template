@@ -22,12 +22,13 @@ export class ArticleService {
             const data = manager.create(ArticleEntity, {
                 title: params.title,
                 content: params.content,
-                categoryId: params.categoryId
+                categoryId: params.categoryId,
+                tagIds: params.tagIds
             });
             await manager.save(data);
             await manager.insert(
                 "article_tag_relation",
-                (params.tags || []).map((i) => ({
+                (params.tagIds || []).map((i) => ({
                     article_id: data.id,
                     tag_id: i
                 }))
@@ -42,7 +43,6 @@ export class ArticleService {
         await this.entityManager.transaction(async (manager) => {
             // 更新文章信息
             const updateParams: ArticleDto = cloneDeep(params);
-            delete updateParams.tags;
             await manager.update(ArticleEntity, id, updateParams);
 
             // 删除文章标签关联
@@ -51,7 +51,7 @@ export class ArticleService {
             // 添加新的标签关联
             await manager.insert(
                 "article_tag_relation",
-                (params.tags || []).map((i) => ({
+                (params.tagIds || []).map((i) => ({
                     article_id: id,
                     tag_id: i
                 }))
@@ -77,27 +77,22 @@ export class ArticleService {
      */
     async queryOneByCondition(condition: FindOptionsWhere<ArticleEntity>) {
         const item = await this.articleRepository.findOne({
-            where: condition
+            where: condition,
+            relations: ["tags", "category"]
         });
 
         if (!item) return null;
 
-        const tags = await this.entityManager.query(`
-            SELECT tag_id FROM article_tag_relation WHERE article_id = ${item.id}
-        `);
-        return {
-            ...item,
-            tags: tags.map((i) => i.tag_id)
-        };
+        return item;
     }
 
     /*
      * 通过关联的分类ID查询文章
      */
     async queryByCategoryId(categoryId: number) {
-        const qb = this.articleRepository.createQueryBuilder("article");
-        qb.innerJoinAndSelect("article.categoryId", "category").where("category.id = :categoryId", { categoryId });
-        return await qb.getMany();
+        return await this.articleRepository.find({
+            where: { categoryId }
+        });
     }
 
     /*

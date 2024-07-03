@@ -1,5 +1,6 @@
 import { BaseEntity } from "@/entities/base.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ArticleEntity } from "@/entities/article/article.entity";
 
 @Entity("article_category")
 export class ArticleCategoryEntity extends BaseEntity {
@@ -17,4 +18,7 @@ export class ArticleCategoryEntity extends BaseEntity {
 
     // 子项
     children: ArticleCategoryEntity[];
+
+    @OneToMany(() => ArticleEntity, (e) => e.categoryId)
+    articles: ArticleEntity[];
 }

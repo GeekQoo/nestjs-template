@@ -18,7 +18,7 @@ export class ArticleDto {
     categoryId: ArticleCategoryDto["id"];
 
     @IsOptional()
-    tags?: ArticleTagDto["id"][];
+    tagIds?: ArticleTagDto["id"][];
 }
 
 // 分页查询文章标签

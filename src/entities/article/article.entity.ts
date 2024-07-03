@@ -14,9 +14,15 @@ export class ArticleEntity extends BaseEntity {
     @Column({ name: "content" })
     content: string;
 
-    @ManyToOne(() => ArticleCategoryEntity, (category) => category.id)
+    @Column({ name: "tag_ids", type: "json" })
+    tagIds: number[];
+
+    @Column({ name: "category_id" })
+    categoryId: number;
+
+    @ManyToOne(() => ArticleCategoryEntity, (e) => e.articles)
     @JoinColumn({ name: "category_id" })
-    categoryId: ArticleCategoryEntity["id"];
+    category: ArticleCategoryEntity;
 
     @ManyToMany(() => ArticleTagEntity)
     @JoinTable({
@@ -24,5 +30,5 @@ export class ArticleEntity extends BaseEntity {
         joinColumn: { name: "article_id", referencedColumnName: "id" },
         inverseJoinColumn: { name: "tag_id", referencedColumnName: "id" }
     })
-    tags: ArticleTagEntity["id"][];
+    tags: ArticleTagEntity[];
 }
