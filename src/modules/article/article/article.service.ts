@@ -96,6 +96,17 @@ export class ArticleService {
     }
 
     /*
+     * 通过关联的标签ID查询文章
+     */
+    async queryByTagId(tagId: number) {
+        return await this.articleRepository
+            .createQueryBuilder("article")
+            .leftJoin("article.tags", "tag")
+            .where("tag.id = :tagId", { tagId })
+            .getMany();
+    }
+
+    /*
      *  删除文章
      */
     async remove(id: number) {

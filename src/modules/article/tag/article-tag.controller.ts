@@ -4,10 +4,14 @@ import { ArticleTagDto, PaginationSearchArticleTagDto } from "./article-tag.dto"
 import { PaginationDataDto, ResponseDto } from "@/common/dto/response.dto";
 import { LoginGuard } from "@/common/guard/login.guard";
 import { ArticleTagEntity } from "@/entities/article/article-tag.entity";
+import { ArticleService } from "@/modules/article/article/article.service";
 
 @Controller("tag")
 export class ArticleTagController {
-    constructor(private readonly articleTagService: ArticleTagService) {}
+    constructor(
+        private readonly articleTagService: ArticleTagService,
+        private readonly articleService: ArticleService
+    ) {}
 
     /*
      * 新增文章标签
@@ -27,6 +31,10 @@ export class ArticleTagController {
     async remove(@Param("id") id: number) {
         const item = await this.articleTagService.queryById(+id);
         if (!item) return ResponseDto.error("未找到该条数据");
+
+        // 查询标签下是否存在文章
+        const articles = await this.articleService.queryByTagId(id);
+        if (articles.length > 0) return ResponseDto.error("该标签下存在文章，无法删除");
 
         await this.articleTagService.remove(id);
         return ResponseDto.success("删除成功");
