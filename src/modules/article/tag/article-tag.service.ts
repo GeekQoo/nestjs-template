@@ -44,6 +44,13 @@ export class ArticleTagService {
     }
 
     /*
+     *  查询全部文章标签
+     */
+    async queryAll() {
+        return await this.articleTagRepository.find();
+    }
+
+    /*
      * 通过ID查询文章标签
      */
     async queryById(id: number) {

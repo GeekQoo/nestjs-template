@@ -72,6 +72,16 @@ export class ArticleTagController {
     }
 
     /*
+     * 查询全部文章标签
+     */
+    @Get("/all")
+    @UseGuards(LoginGuard)
+    async queryAll() {
+        const data = await this.articleTagService.queryAll();
+        return ResponseDto.success(data);
+    }
+
+    /*
      * 通过ID查询文章标签
      */
     @Get(":id")
