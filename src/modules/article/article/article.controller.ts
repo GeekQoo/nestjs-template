@@ -33,10 +33,10 @@ export class ArticleController {
     }
 
     /*
-     * 分页查询文章标签
+     * 分页查询文章
      */
     @Get()
-    @UseGuards(LoginGuard)
+    // @UseGuards(LoginGuard)
     async paginationQuery(
         @Query() dto: PaginationSearchArticleDto
     ): Promise<ResponseDto<PaginationDataDto<ArticleEntity>>> {
@@ -57,7 +57,7 @@ export class ArticleController {
      * 通过ID查询文章
      */
     @Get(":id")
-    @UseGuards(LoginGuard)
+    // @UseGuards(LoginGuard)
     async queryById(@Param("id") id: number) {
         const data = await this.articleService.queryOneByCondition({ id });
         if (data) {
