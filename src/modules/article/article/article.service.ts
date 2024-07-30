@@ -19,9 +19,13 @@ export class ArticleService {
      */
     async create(params: ArticleDto) {
         await this.entityManager.transaction(async (manager) => {
+            if (!params.summary) {
+                params.summary = params.content?.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 200) || "";
+            }
             const data = manager.create(ArticleEntity, {
                 title: params.title,
                 content: params.content,
+                summary: params.summary,
                 categoryId: params.categoryId,
                 tagIds: params.tagIds
             });
@@ -43,6 +47,11 @@ export class ArticleService {
         await this.entityManager.transaction(async (manager) => {
             // 更新文章信息
             const updateParams: ArticleDto = cloneDeep(params);
+
+            if (!updateParams.summary) {
+                updateParams.summary = updateParams.content?.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 200) || "";
+            }
+
             await manager.update(ArticleEntity, id, updateParams);
 
             // 删除文章标签关联

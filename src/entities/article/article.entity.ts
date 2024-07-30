@@ -14,6 +14,9 @@ export class ArticleEntity extends BaseEntity {
     @Column({ name: "content", length: 10000 })
     content: string;
 
+    @Column({ name: "summary", length: 1000 })
+    summary: string;
+
     @Column({ name: "tag_ids", type: "json" })
     tagIds: number[];
 

@@ -14,6 +14,10 @@ export class ArticleDto {
     @IsString()
     content: string;
 
+    @IsString()
+    @IsOptional()
+    summary: string;
+
     @IsNumber()
     categoryId: ArticleCategoryDto["id"];
 
