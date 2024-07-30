@@ -17,6 +17,9 @@ export class ArticleEntity extends BaseEntity {
     @Column({ name: "summary", length: 1000 })
     summary: string;
 
+    @Column({ name: "thumbnail", default: "" })
+    thumbnail: string;
+
     @Column({ name: "tag_ids", type: "json" })
     tagIds: number[];
 

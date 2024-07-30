@@ -18,6 +18,10 @@ export class ArticleDto {
     @IsOptional()
     summary: string;
 
+    @IsString()
+    @IsOptional()
+    thumbnail: string;
+
     @IsNumber()
     categoryId: ArticleCategoryDto["id"];
 

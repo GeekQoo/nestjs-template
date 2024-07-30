@@ -26,6 +26,7 @@ export class ArticleService {
                 title: params.title,
                 content: params.content,
                 summary: params.summary,
+                thumbnail: params.thumbnail,
                 categoryId: params.categoryId,
                 tagIds: params.tagIds
             });
