@@ -76,7 +76,8 @@ export class ArticleService {
         const { page, size } = params;
         return await this.articleRepository.findAndCount({
             take: size,
-            skip: (page - 1) * size
+            skip: (page - 1) * size,
+            relations: ["tags", "category"]
         });
     }
 
