@@ -7,6 +7,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthModule } from "@/modules/auth/auth.module";
 import { NetdiskModule } from "@/modules/netdisk/netdisk.module";
 import { ArticleModule } from "@/modules/article/article.module";
+import { SettingsModule } from "@/modules/settings/settings.module";
 
 @Module({
     imports: [
@@ -39,7 +40,9 @@ import { ArticleModule } from "@/modules/article/article.module";
         // 网盘模块
         NetdiskModule,
         // 文章模块
-        ArticleModule
+        ArticleModule,
+        // 设置模块
+        SettingsModule
     ],
     controllers: [AppController],
     providers: [AppService]
