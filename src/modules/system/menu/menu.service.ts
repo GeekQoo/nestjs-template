@@ -33,7 +33,9 @@ export class SysMenuService {
      * 查询全部菜单并转换为树形结构
      */
     async queryAll() {
-        const menus: SysMenuEntity[] = await this.menuRepository.find();
+        const menus: SysMenuEntity[] = await this.menuRepository.find({
+            order: { orderNum: "ASC" }
+        });
 
         // 递归构建树形结构
         const buildTree = (menus: SysMenuEntity[], parentId = null): SysMenuEntity[] => {
