@@ -24,5 +24,5 @@ export class SettingsBannerDto {
     sort: number;
 }
 
-// 分页查询文章标签
+// 分页查询幻灯片
 export class PaginationSearchSettingsBannerDto extends PaginationParamDto {}
