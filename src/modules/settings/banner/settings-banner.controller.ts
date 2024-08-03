@@ -67,7 +67,7 @@ export class SettingsBannerController {
      * 查询全部幻灯片
      */
     @Get("/all")
-    @UseGuards(LoginGuard)
+    // @UseGuards(LoginGuard)
     async queryAll() {
         const data = await this.settingsBannerService.queryAll();
         return ResponseDto.success(data);

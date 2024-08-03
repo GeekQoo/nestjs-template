@@ -10,12 +10,14 @@ export class SettingsBannerDto {
     title: string;
 
     @IsString()
+    @IsOptional()
     description?: string;
 
     @IsString()
     imageUrl: string;
 
     @IsString()
+    @IsOptional()
     linkUrl?: string;
 
     @IsNumber()
