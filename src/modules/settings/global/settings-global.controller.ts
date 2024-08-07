@@ -4,6 +4,7 @@ import { PaginationDataDto, ResponseDto } from "@/common/dto/response.dto";
 import { PaginationSearchSettingsGlobalDto, SettingsGlobalDto } from "@/modules/settings/global/settings-global.dto";
 import { LoginGuard } from "@/common/guard/login.guard";
 import { SettingsGlobalEntity } from "@/entities/settings/settings-global.entity";
+import { Not } from "typeorm";
 
 @Controller("global")
 export class SettingsGlobalController {
@@ -40,7 +41,7 @@ export class SettingsGlobalController {
     @Patch(":id")
     @UseGuards(LoginGuard)
     async update(@Param("id") id: number, @Body() dto: SettingsGlobalDto) {
-        const item = await this.settingsGlobalService.queryByCondition({ key: dto.key });
+        const item = await this.settingsGlobalService.queryByCondition({ key: dto.key, id: Not(id) });
         if (item) return ResponseDto.error("该配置项已存在");
         await this.settingsGlobalService.update(id, dto);
         return ResponseDto.success("更新成功");
