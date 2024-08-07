@@ -1,36 +1,25 @@
 import { BaseEntity } from "@/entities/base.entity";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("settings_global")
 export class SettingsGlobalEntity extends BaseEntity {
-    @PrimaryColumn()
-    id: number = 1;
+    // 标记为主键，值自动生成
+    @PrimaryGeneratedColumn()
+    id: number;
 
-    // 网站名称
-    @Column({ name: "title", default: "", nullable: true })
-    title: string;
+    // 配置项名称
+    @Column({ name: "name", default: "", nullable: true })
+    name: string;
 
-    // 网站简介
-    @Column({ name: "description", default: "", nullable: true })
-    description?: string;
+    // 配置项Key
+    @Column({ name: "key" })
+    key: string;
 
-    // 网站详细介绍
-    @Column({ name: "content", length: 1000, default: "", nullable: true })
-    content?: string;
+    // 配置项值
+    @Column({ name: "value", default: "", nullable: true })
+    value: string;
 
-    // 网站logo
-    @Column({ name: "logo", default: "", nullable: true })
-    logo?: string;
-
-    // 网站logo竖版
-    @Column({ name: "logo_vertical", default: "", nullable: true })
-    logoVertical?: string;
-
-    // 网站备案号
-    @Column({ name: "beian", default: "", nullable: true })
-    beian?: string;
-
-    // 网站公安备案号
-    @Column({ name: "police_beian", default: "", nullable: true })
-    policeBeian?: string;
+    // 配置项排序
+    @Column({ name: "sort", default: 0 })
+    sort: number;
 }

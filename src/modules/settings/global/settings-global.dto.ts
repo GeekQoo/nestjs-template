@@ -1,31 +1,23 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
+import { PaginationParamDto } from "@/common/dto/pagination.dto";
 
 export class SettingsGlobalDto {
-    @IsString()
+    @IsNumber()
     @IsOptional()
-    title?: string;
+    id?: number;
 
     @IsString()
-    @IsOptional()
-    description?: string;
+    name: string;
 
     @IsString()
-    @IsOptional()
-    content?: string;
+    key: string;
 
     @IsString()
-    @IsOptional()
-    logo?: string;
+    value: string;
 
-    @IsString()
-    @IsOptional()
-    logoVertical?: string;
-
-    @IsString()
-    @IsOptional()
-    beian?: string;
-
-    @IsString()
-    @IsOptional()
-    policeBeian?: string;
+    @IsNumber()
+    sort: number;
 }
+
+// 分页查询文章标签
+export class PaginationSearchSettingsGlobalDto extends PaginationParamDto {}
