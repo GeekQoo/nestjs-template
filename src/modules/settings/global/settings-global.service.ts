@@ -60,4 +60,13 @@ export class SettingsGlobalService {
             }
         });
     }
+
+    /*
+     * 通过条件查询全局配置项
+     */
+    async queryByCondition(condition: Record<string, any>) {
+        return await this.settingsGlobalRepository.findOne({
+            where: condition
+        });
+    }
 }

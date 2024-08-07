@@ -15,6 +15,8 @@ export class SettingsGlobalController {
     @Post()
     @UseGuards(LoginGuard)
     async create(@Body() dto: SettingsGlobalDto) {
+        const item = await this.settingsGlobalService.queryByCondition({ key: dto.key });
+        if (item) return ResponseDto.error("该配置项已存在");
         await this.settingsGlobalService.create(dto);
         return ResponseDto.success("新增成功");
     }
@@ -38,6 +40,8 @@ export class SettingsGlobalController {
     @Patch(":id")
     @UseGuards(LoginGuard)
     async update(@Param("id") id: number, @Body() dto: SettingsGlobalDto) {
+        const item = await this.settingsGlobalService.queryByCondition({ key: dto.key });
+        if (item) return ResponseDto.error("该配置项已存在");
         await this.settingsGlobalService.update(id, dto);
         return ResponseDto.success("更新成功");
     }
