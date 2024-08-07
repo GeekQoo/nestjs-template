@@ -34,7 +34,7 @@ export class SysMenuService {
      */
     async queryAll() {
         const menus: SysMenuEntity[] = await this.menuRepository.find({
-            order: { orderNum: "ASC" }
+            order: { sort: "ASC" }
         });
 
         // 递归构建树形结构

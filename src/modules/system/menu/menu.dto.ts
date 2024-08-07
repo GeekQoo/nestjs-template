@@ -27,7 +27,7 @@ export class CreateMenuDto {
 
     @IsOptional()
     @IsNumber()
-    orderNum: number;
+    sort: number;
 }
 
 // 更新菜单

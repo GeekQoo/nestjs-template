@@ -37,8 +37,8 @@ export class SysMenuEntity extends BaseEntity {
     isShow: boolean;
 
     // 排序
-    @Column({ name: "order_num", type: "int", default: 0, nullable: true })
-    orderNum: number;
+    @Column({ name: "sort", type: "int", default: 0, nullable: true })
+    sort: number;
 
     // 子项
     children: SysMenuEntity[];
