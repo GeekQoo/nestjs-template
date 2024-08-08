@@ -16,6 +16,9 @@ export class SettingsGlobalDto {
     value: string;
 
     @IsNumber()
+    type: number;
+
+    @IsNumber()
     sort: number;
 }
 
