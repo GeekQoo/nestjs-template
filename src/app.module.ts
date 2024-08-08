@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { SystemModule } from "@/modules/system/system.module";
@@ -11,19 +12,27 @@ import { SettingsModule } from "@/modules/settings/settings.module";
 
 @Module({
     imports: [
-        // 数据库模块
-        TypeOrmModule.forRoot({
-            type: "mysql",
-            host: "localhost",
-            port: 3306,
-            username: "database",
-            password: "database",
-            database: "database",
-            // entities: [],
-            synchronize: true,
-            retryDelay: 500,
-            retryAttempts: 10,
-            autoLoadEntities: true
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: ".env"
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => {
+                return {
+                    type: "mysql",
+                    host: configService.get<string>("DB_HOST"),
+                    port: configService.get<number>("DB_PORT"),
+                    username: configService.get<string>("DB_USERNAME"),
+                    password: configService.get<string>("DB_PASSWORD"),
+                    database: configService.get<string>("DB_DATABASE"),
+                    synchronize: true,
+                    retryDelay: 500,
+                    retryAttempts: 10,
+                    autoLoadEntities: true
+                };
+            },
+            inject: [ConfigService]
         }),
         // jwt模块
         JwtModule.register({
