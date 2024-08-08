@@ -16,7 +16,7 @@ export class SettingsGlobalEntity extends BaseEntity {
     key: string;
 
     // 配置项值
-    @Column({ name: "value", default: "", nullable: true })
+    @Column({ name: "value", default: "", nullable: true, length: 10000 })
     value: string;
 
     // 配置项排序
