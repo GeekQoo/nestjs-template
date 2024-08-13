@@ -73,11 +73,16 @@ export class ArticleService {
      * 分页查询文章
      */
     async paginationQuery(params: PaginationSearchArticleDto) {
-        const { page, size } = params;
+        const { page, size, categoryId } = params;
+        const where: FindOptionsWhere<ArticleEntity> = {};
+
+        if (categoryId) where.categoryId = categoryId;
+
         return await this.articleRepository.findAndCount({
             take: size,
             skip: (page - 1) * size,
-            relations: ["tags", "category"]
+            relations: ["tags", "category"],
+            where
         });
     }
 
