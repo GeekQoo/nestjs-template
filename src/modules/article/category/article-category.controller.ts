@@ -67,7 +67,7 @@ export class ArticleCategoryController {
      * 通过ID查询文章分类
      */
     @Get(":id")
-    @UseGuards(LoginGuard)
+    // @UseGuards(LoginGuard)
     async queryById(@Param("id") id: number) {
         const data = await this.articleCategoryService.queryById(id);
         if (data) {
